@@ -168,8 +168,8 @@ mcp = FastMCP(
     ),
     stateless_http=True,
     streamable_http_path=f"/t/{TOKEN}/mcp",
+    host="0.0.0.0",
 )
-
 
 @mcp.tool()
 async def submit_transcription(
