@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: scribe-connector
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      # Ключ ElevenLabs. Значение вводится в интерфейсе Render при деплое
+      # и в репозиторий не попадает.
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      # Секрет, закрывающий коннектор от посторонних.
+      # Render сгенерирует длинную случайную строку сам.
+      - key: CONNECTOR_TOKEN
+        generateValue: true
+      - key: SCRIBE_MODEL
+        value: scribe_v2
+      - key: PYTHON_VERSION
+        value: "3.12"
